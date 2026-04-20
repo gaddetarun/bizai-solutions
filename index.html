@@ -236,7 +236,7 @@ body.cursor-hover #cursor-ring{border-color:rgba(232,98,42,0.85);}
 .g-coral{color:var(--coral);-webkit-text-fill-color:var(--coral)}
 
 /* ═══ LAYOUT ═══ */
-.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+.wrap{max-width:min(1680px,100%);margin:0 auto;padding:0 clamp(28px,4vw,72px)}
 .sec{padding:120px 0;position:relative}
 .sec-sm{padding:80px 0;position:relative}
 
@@ -295,28 +295,131 @@ body.cursor-hover #cursor-ring{border-color:rgba(232,98,42,0.85);}
 /* ═══════════════════════
    HERO
 ═══════════════════════ */
-#hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 80px;position:relative;overflow:hidden;z-index:1}
+#hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:90px 0 40px;position:relative;overflow:hidden;z-index:1}
 #hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .hero-noise{position:absolute;inset:0;z-index:1;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
 
-.hero-inner{position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:0 40px;width:100%}
-.hero-pre{display:flex;align-items:center;gap:16px;margin-bottom:32px;opacity:0;animation:fade-up 0.8s var(--ease-out) 0.2s forwards}
+.hero-inner{position:relative;z-index:2;width:100%;margin:0;padding:0 clamp(28px,4vw,72px);display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.15fr);gap:clamp(40px,5vw,80px);align-items:center}
+.hero-copy{min-width:0}
+.hero-pre{display:flex;align-items:center;gap:16px;margin-bottom:24px;opacity:0;animation:fade-up 0.8s var(--ease-out) 0.2s forwards}
 .hero-pre-line{flex:1;max-width:60px;height:1px;background:var(--teal);opacity:0.6}
 .hero-hl{overflow:hidden;margin-bottom:8px}
-.hero-hl h1{transform:translateY(110%);animation:slide-up 1s var(--ease-out) forwards}
+.hero-hl h1{transform:translateY(110%);animation:slide-up 1s var(--ease-out) forwards;font-size:clamp(2.2rem,5vw,5.2rem)}
 .hero-hl:nth-child(3) h1{animation-delay:0.1s}
 .hero-hl:nth-child(4) h1{animation-delay:0.18s;color:var(--fog)}
-.hero-sub{max-width:580px;margin:40px 0 48px;opacity:0;animation:fade-up 0.8s var(--ease-out) 0.5s forwards}
-.hero-actions{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fade-up 0.8s var(--ease-out) 0.65s forwards}
-.hero-scroll{position:absolute;bottom:40px;right:40px;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2;opacity:0;animation:fade-up 0.8s var(--ease-out) 1s forwards}
-.hero-scroll-line{width:1px;height:48px;background:linear-gradient(180deg,var(--teal),transparent);animation:line-grow 2s ease-in-out infinite}
-.hero-scroll span{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fog);writing-mode:vertical-rl}
+.hero-sub{max-width:min(620px,95%);margin:28px 0 32px;opacity:0;animation:fade-up 0.8s var(--ease-out) 0.5s forwards}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fade-up 0.8s var(--ease-out) 0.65s forwards;margin-bottom:40px}
+.hero-stats{display:flex;gap:48px;opacity:0;animation:fade-up 0.8s var(--ease-out) 0.9s forwards}
+.hero-stat{text-align:left}
+.hero-stat-n{font-family:var(--font-display);font-size:1.8rem;font-weight:800;letter-spacing:-0.04em;line-height:1}
+.hero-stat-l{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--fog);margin-top:6px}
 
-/* Hero stat strip */
-.hero-stats{position:absolute;bottom:80px;right:40px;z-index:2;display:flex;flex-direction:column;gap:16px;opacity:0;animation:fade-right 0.8s var(--ease-out) 0.9s forwards}
-.hero-stat{text-align:right}
-.hero-stat-n{font-family:var(--font-display);font-size:1.6rem;font-weight:800;letter-spacing:-0.04em;line-height:1}
-.hero-stat-l{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--fog)}
+/* ═══ EMBEDDED DEMO WINDOW ═══ */
+.demo-wrap{position:relative;width:100%;max-width:980px;justify-self:end;aspect-ratio:16/10.3;opacity:0;animation:fade-up 0.9s var(--ease-out) 0.7s forwards}
+.demo-glow{position:absolute;inset:-30px -30px -20px -10px;background:radial-gradient(60% 60% at 80% 10%,rgba(0,207,199,0.22),transparent 70%),radial-gradient(60% 60% at 20% 90%,rgba(90,143,245,0.18),transparent 70%);filter:blur(30px);z-index:0;pointer-events:none}
+.demo-window{position:relative;z-index:1;width:100%;height:100%;background:#05070b;border:1px solid rgba(255,255,255,0.14);border-radius:14px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,0.9),0 0 60px -10px rgba(0,207,199,0.2)}
+.demo-chrome{height:30px;display:flex;align-items:center;padding:0 12px;background:linear-gradient(180deg,#10141d,#0a0d14);border-bottom:1px solid rgba(255,255,255,0.08);gap:10px}
+.dm-dot{width:10px;height:10px;border-radius:50%;background:#2a2f3c}
+.dm-dot.r{background:#ff5f56}.dm-dot.y{background:#ffbd2e}.dm-dot.g{background:#27c93f}
+.chrome-url{flex:1;text-align:center;font-family:var(--font-mono);font-size:10px;color:var(--fog);letter-spacing:0.05em}
+.demo-body{position:relative;display:grid;grid-template-rows:44px 1fr 34px 48px;height:calc(100% - 30px);background:radial-gradient(600px 300px at 70% 0%,rgba(0,207,199,0.08),transparent 60%),#07080d}
+
+/* Scenario tab strip */
+.dm-tabs{display:flex;align-items:stretch;gap:0;padding:0 10px;border-top:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.01)}
+.dm-tab{position:relative;flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--fog);background:transparent;border:none;cursor:pointer;transition:color .2s}
+.dm-tab:hover{color:var(--silver)}
+.dm-tab.active{color:#fff}
+.dm-tab .tab-dot{width:5px;height:5px;border-radius:50%;background:var(--fog);transition:background .2s,box-shadow .2s}
+.dm-tab.active .tab-dot{background:var(--teal);box-shadow:0 0 8px rgba(0,207,199,0.6)}
+.dm-tab-underline{position:absolute;bottom:0;left:10%;right:10%;height:2px;background:var(--teal);transform:scaleX(0);transform-origin:left center;transition:transform .35s var(--ease-out)}
+.dm-tab.active .dm-tab-underline{transform:scaleX(1)}
+
+.dm-send.paused{border-color:rgba(255,255,255,0.22);background:rgba(255,255,255,0.04);color:var(--silver)}
+
+/* Video-style play/pause overlay */
+.dm-overlay{position:absolute;inset:30px 0 0 0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:5;background:transparent;transition:background .25s ease}
+.dm-overlay.scrim{background:rgba(5,7,11,0.45);backdrop-filter:blur(1px)}
+.dm-overlay-btn{pointer-events:auto;width:58px;height:58px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);background:rgba(8,11,18,0.55);color:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 10px 30px -10px rgba(0,0,0,0.6),0 0 0 1px rgba(0,0,0,0.4) inset;opacity:0;transform:scale(0.9);transition:opacity .25s ease,transform .25s ease,background .2s ease,border-color .2s ease}
+.dm-overlay-btn:hover{background:rgba(0,207,199,0.18);border-color:rgba(0,207,199,0.5)}
+.dm-overlay.show .dm-overlay-btn{opacity:1;transform:scale(1)}
+.dm-overlay-btn svg{width:26px;height:26px}
+.dm-overlay-btn .dm-ico-play{display:none;margin-left:3px}
+.dm-overlay-btn.is-paused .dm-ico-play{display:block}
+.dm-overlay-btn.is-paused .dm-ico-pause{display:none}
+
+.demo-topnav{display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(255,255,255,0.08);gap:18px}
+.demo-brand{display:flex;align-items:center;gap:8px}
+.demo-brand .mark{width:18px;height:18px;object-fit:contain}
+.demo-brand .name{font-size:12px;font-weight:700;font-family:var(--font-display);color:#fff}
+.demo-brand .name .accent{color:var(--teal)}
+.demo-topnav .links{display:flex;gap:14px;font-size:11px;color:var(--fog);font-family:var(--font-body)}
+.demo-topnav .links .active{color:#fff}
+.demo-topnav .right{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:10px;color:var(--fog)}
+.agents-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid rgba(255,255,255,0.14);border-radius:999px;background:rgba(255,255,255,0.02);font-size:10px;font-family:var(--font-mono)}
+.agents-pill .dots{display:inline-flex;gap:2px}
+.agents-pill .dots i{width:4px;height:4px;border-radius:50%;background:var(--teal);display:inline-block;animation:dm-breathe 1.6s ease-in-out infinite}
+.agents-pill .dots i:nth-child(2){animation-delay:.2s;background:#5a8ff5}
+.agents-pill .dots i:nth-child(3){animation-delay:.4s;background:var(--teal)}
+@keyframes dm-breathe{0%,100%{opacity:0.4}50%{opacity:1}}
+.dm-avatar{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#5a8ff5,var(--teal));display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+
+.dm-scroll{overflow-y:auto;overflow-x:hidden;padding:18px 18px 6px;position:relative;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.15) transparent}
+.dm-scroll::-webkit-scrollbar{width:4px}
+.dm-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:4px}
+.dm-stream{display:flex;flex-direction:column;gap:12px}
+.dm-welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:100%;padding:10px 0 30px;opacity:1;transition:opacity .3s}
+.dm-welcome.hide{display:none}
+.dm-welcome h2{font-family:var(--font-display);font-size:26px;font-weight:400;background:linear-gradient(135deg,#6fb0ff,#8a7dff 55%,#ff6aa9);-webkit-background-clip:text;background-clip:text;color:transparent;margin:0}
+.dm-welcome p{color:var(--fog);font-size:11px;margin:0 0 10px;text-align:center}
+.dm-suggestions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}
+.sug{border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;background:#0d111a;display:flex;flex-direction:column;gap:4px;transition:border-color .2s,transform .2s}
+.sug.focus{border-color:rgba(0,207,199,0.6);box-shadow:0 0 0 1px rgba(0,207,199,0.3),0 0 20px rgba(0,207,199,0.2);transform:translateY(-1px)}
+.sug .ico{width:14px;height:14px}
+.sug .t{font-size:10.5px;font-weight:400;color:#fff}
+.sug .d{font-size:9.5px;color:var(--fog);line-height:1.35}
+
+.msg-user{align-self:flex-end;background:linear-gradient(180deg,#20224f,#1a1c45);border:1px solid rgba(138,125,255,0.35);color:#fff;padding:9px 14px;border-radius:10px;font-size:12px;max-width:70%;box-shadow:0 6px 20px -10px rgba(138,125,255,0.5)}
+.msg-ai{align-self:flex-start;max-width:94%;background:#0d111a;border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden}
+.ai-head{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,0.08);font-size:11px;font-weight:700;font-family:var(--font-display);color:#fff}
+.ai-head .mark{width:14px;height:14px;object-fit:contain}
+.ai-steps{padding:6px 12px 10px;display:flex;flex-direction:column;gap:4px}
+.ai-steps .status{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--fog);padding:4px 0;font-family:var(--font-mono)}
+.ai-steps .status.done{color:#4ade80}
+.dm-spinner{width:11px;height:11px;border-radius:50%;border:2px solid rgba(0,207,199,0.25);border-top-color:var(--teal);animation:dm-spin 0.8s linear infinite}
+@keyframes dm-spin{to{transform:rotate(360deg)}}
+.dm-step{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--fog);padding:2px 0;transition:color .3s}
+.dm-step.active{color:#fff}
+.dm-step.done{color:var(--silver)}
+.dm-step .bullet{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--fog);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.dm-step.active .bullet{border-color:var(--teal);background:radial-gradient(circle,var(--teal) 0 3px,transparent 4px);animation:dm-pulse 1s ease-in-out infinite}
+@keyframes dm-pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,207,199,0.5)}50%{box-shadow:0 0 0 4px rgba(0,207,199,0)}}
+.dm-step.done .bullet{border-color:#4ade80;background:#4ade80}
+.dm-step.done .bullet::after{content:'✓';color:#0a1513;font-size:8px;font-weight:900}
+.ai-answer{padding:10px 12px 12px}
+.ai-answer .summary{font-size:12px;line-height:1.6;color:#e8e8f0;margin:0 0 8px;font-weight:400;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-shadow:none}
+.ai-answer .summary b{color:#e8e8f0;font-weight:400;background:transparent;border:none;padding:0;text-shadow:none}
+.ai-answer ul{margin:4px 0 10px;padding-left:14px}
+.ai-answer li{font-size:11px;color:var(--fog);line-height:1.5}
+.section-label{font-family:var(--font-mono);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--teal);margin:8px 0 6px}
+.result-table{width:100%;border-collapse:separate;border-spacing:0;font-size:10px;background:#10151f;border:1px solid rgba(255,255,255,0.08);border-radius:6px;overflow:hidden}
+.result-table th{text-align:left;padding:6px 8px;font-weight:600;font-size:9.5px;color:var(--fog);border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02)}
+.result-table td{padding:5px 8px;border-top:1px solid rgba(255,255,255,0.04);color:#fff;font-variant-numeric:tabular-nums}
+.result-table tr:first-child td{border-top:none}
+.pill-emp{display:inline-block;padding:1px 6px;font-size:8.5px;background:rgba(90,143,245,0.15);color:#8ab4ff;border-radius:999px;border:1px solid rgba(90,143,245,0.25)}
+.pill-con{display:inline-block;padding:1px 6px;font-size:8.5px;background:rgba(255,170,80,0.12);color:#ffca8a;border-radius:999px;border:1px solid rgba(255,170,80,0.2)}
+
+.dm-composer{display:flex;align-items:center;gap:8px;padding:0 10px 10px}
+.dm-composer .input{flex:1;height:32px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:#0a0d14;display:flex;align-items:center;padding:0 10px;font-size:11px;color:var(--fog);font-family:var(--font-body);position:relative}
+.dm-composer .typed{color:#fff}
+.dm-composer .cursor{width:1px;height:11px;background:#fff;display:inline-block;margin-left:2px;animation:dm-blink 1s steps(2) infinite}
+@keyframes dm-blink{50%{opacity:0}}
+.icon-btn{width:26px;height:26px;border-radius:6px;border:1px solid rgba(255,255,255,0.14);background:#0a0d14;display:inline-flex;align-items:center;justify-content:center;color:var(--fog);font-size:11px}
+.dm-send{height:26px;padding:0 10px;border-radius:6px;border:1px solid rgba(0,207,199,0.4);background:rgba(0,207,199,0.12);color:var(--teal);font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:none}
+.dm-send.stop{border-color:rgba(255,91,91,0.5);background:rgba(255,91,91,0.12);color:#ff9a9a}
+
+.dm-caption{position:absolute;left:0;right:0;bottom:-30px;display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--fog)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80;animation:dm-breathe 1.4s ease-in-out infinite}
+.dm-caption .bar{flex:1;height:1px;background:linear-gradient(90deg,rgba(255,255,255,0.08),transparent)}
 
 /* ═══ KEYFRAMES ═══ */
 @keyframes slide-up{to{transform:translateY(0)}}
@@ -637,16 +740,15 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.05);paddi
 
 /* ── 1280px: tighten padding ── */
 @media(max-width:1280px){
-  .wrap{padding:0 32px}
-  .hero-inner{padding:0 32px}
   .int-grid{gap:56px}
   .orbit-wrap{width:380px;height:380px}
 }
 
 /* ── 1100px: tablet landscape ── */
 @media(max-width:1100px){
-  .wrap{padding:0 28px}
-  .hero-inner{padding:0 28px}
+  .hero-inner{grid-template-columns:1fr;gap:48px}
+  .demo-wrap{justify-self:stretch;max-width:100%;aspect-ratio:16/10}
+  .hero-sub{max-width:100%}
   .sec{padding:96px 0}
   .problem-split{grid-template-columns:1fr;gap:56px}
   .problem-right{padding-top:0}
@@ -683,10 +785,11 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.05);paddi
   #nav{padding:0 20px}
   .nav-links,.nav-right{display:none}
   .nav-ham{display:flex}
-  .wrap{padding:0 20px}
-  .hero-inner{padding:0 20px}
-  .hero-stats{display:none}
-  .hero-scroll{display:none}
+  .hero-inner{gap:36px}
+  .hero-stats{display:flex;gap:24px}
+  .hero-stat-n{font-size:1.4rem}
+  .dm-caption{display:none}
+  .demo-wrap{aspect-ratio:16/12}
   .hero-sub{margin:24px 0 32px;max-width:100%}
   .hero-actions{flex-direction:column;align-items:stretch;gap:12px}
   .btn-primary,.btn-outline{width:100%;justify-content:center}
@@ -733,8 +836,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.05);paddi
 
 /* ── 480px: small phones ── */
 @media(max-width:480px){
-  .wrap{padding:0 16px}
-  .hero-inner{padding:0 16px}
   .sec{padding:52px 0}
   .t-display{font-size:clamp(1.75rem,7.5vw,2.6rem)}
   .t-heading{font-size:clamp(1.4rem,6.5vw,2rem)}
@@ -838,33 +939,124 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.05);paddi
   <canvas id="hero-canvas"></canvas>
   <div class="hero-noise"></div>
   <div class="hero-inner">
-    <div class="hero-pre">
-      <div class="hero-pre-line"></div>
-      <span class="t-label">AI-Powered Back-Office Automation</span>
+    <div class="hero-copy">
+      <div class="hero-pre">
+        <div class="hero-pre-line"></div>
+        <span class="t-label">AI-Powered Back-Office Automation</span>
+      </div>
+      <div class="hero-hl"><h1 class="t-display">Your software.<br><span class="g-teal">Already automated.</span></h1></div>
+      <p class="t-body hero-sub" style="color:var(--silver)">Biz AI Solutions connects to any ERP, CRM, or field service platform and turns plain English into completed workflows — no integrations to build, no training required.</p>
+      <div class="hero-actions">
+        <a href="#how" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          See How It Works
+        </a>
+        <a href="https://calendar.app.google/dRN3hW5Ei4YkfVu58" target="_blank" rel="noopener noreferrer" class="btn-outline">Book a Demo</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-n g-teal">4.2 hrs</div>
+          <div class="hero-stat-l">saved daily / person</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n" style="color:var(--coral)">94%</div>
+          <div class="hero-stat-l">task accuracy</div>
+        </div>
+      </div>
     </div>
-    <div class="hero-hl"><h1 class="t-display">Your software.<br><span class="g-teal">Already automated.</span></h1></div>
-    <p class="t-body hero-sub" style="color:var(--silver)">Biz AI Solutions connects to any ERP, CRM, or field service platform and turns plain English into completed workflows — no integrations to build, no training required.</p>
-    <div class="hero-actions">
-      <a href="#how" class="btn-primary">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        See How It Works
-      </a>
-      <a href="https://calendar.app.google/dRN3hW5Ei4YkfVu58" target="_blank" rel="noopener noreferrer" class="btn-outline">Book a Demo</a>
+
+    <!-- Embedded product demo window -->
+    <div class="demo-wrap">
+      <div class="demo-glow"></div>
+      <div class="demo-window">
+        <div class="demo-chrome">
+          <span class="dm-dot r"></span>
+          <span class="dm-dot y"></span>
+          <span class="dm-dot g"></span>
+          <span class="chrome-url">app.bizai-solutions.com</span>
+          <span style="width:30px"></span>
+        </div>
+        <div class="demo-body">
+          <div class="demo-topnav">
+            <div class="demo-brand">
+              <img class="mark" src="../Icon_1024_x_1024 bg removed.png" alt="Biz AI" onerror="this.onerror=null;this.src='Icon_1024_x_1024 bg removed.png'">
+              <span class="name">Biz AI <span class="accent">Solutions</span></span>
+            </div>
+            <div class="links">
+              <span class="active">Chat</span>
+              <span>Workflows</span>
+              <span>History</span>
+            </div>
+            <div class="right">
+              <span class="agents-pill">
+                <span class="dots"><i></i><i></i><i></i></span>
+                3 agents online
+              </span>
+              <span class="dm-avatar">T</span>
+            </div>
+          </div>
+
+          <div class="dm-scroll">
+            <div class="dm-welcome" id="dm-welcome">
+              <h2>How can I help today?</h2>
+              <p>Ask in plain English. I'll handle the rest.</p>
+              <div class="dm-suggestions">
+                <div class="sug" data-key="schedules">
+                  <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  <span class="t">See this week's schedule</span>
+                  <span class="d">All jobs, crews &amp; sites</span>
+                </div>
+                <div class="sug" data-key="invoices">
+                  <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+                  <span class="t">Outstanding invoices</span>
+                  <span class="d">Aging and amounts owed</span>
+                </div>
+                <div class="sug" data-key="revenue">
+                  <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 4 5-6"/></svg>
+                  <span class="t">Revenue this month</span>
+                  <span class="d">Top clients &amp; trend</span>
+                </div>
+              </div>
+            </div>
+            <div class="dm-stream" id="dm-stream"></div>
+          </div>
+
+          <div class="dm-tabs" id="dm-tabs">
+            <button class="dm-tab active" data-key="schedules" type="button">
+              <span class="tab-dot"></span>Schedules
+              <span class="dm-tab-underline"></span>
+            </button>
+            <button class="dm-tab" data-key="invoices" type="button">
+              <span class="tab-dot"></span>Invoices
+              <span class="dm-tab-underline"></span>
+            </button>
+            <button class="dm-tab" data-key="revenue" type="button">
+              <span class="tab-dot"></span>Revenue
+              <span class="dm-tab-underline"></span>
+            </button>
+          </div>
+
+          <div class="dm-composer">
+            <div class="input"><span class="typed" id="dm-typed"></span><span class="cursor"></span></div>
+            <button class="icon-btn" aria-label="Attach">＋</button>
+            <button class="dm-send" id="dm-send" type="button">Send</button>
+          </div>
+        </div>
+
+        <!-- Video-style play/pause overlay (sits above demo body; only the button is interactive) -->
+        <div class="dm-overlay" id="dm-overlay" aria-hidden="true">
+          <button class="dm-overlay-btn" id="dm-overlay-btn" type="button" aria-label="Pause demo">
+            <svg class="dm-ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+            <svg class="dm-ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="dm-caption">
+        <span class="live-dot"></span>
+        <span>Live product walkthrough</span>
+        <span class="bar"></span>
+      </div>
     </div>
-  </div>
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-n g-teal">4.2 hrs</div>
-      <div class="hero-stat-l">saved daily / person</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-n" style="color:var(--coral)">94%</div>
-      <div class="hero-stat-l">task accuracy</div>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-    <span>scroll</span>
   </div>
 </section>
 
@@ -1895,6 +2087,422 @@ document.querySelectorAll('.faq-q').forEach(btn=>{
     }
   });
 });
+</script>
+
+<!-- ══ HERO DEMO ANIMATION ══ -->
+<script>
+(() => {
+  const typedEl   = document.getElementById('dm-typed');
+  const sendBtn   = document.getElementById('dm-send');
+  const stream    = document.getElementById('dm-stream');
+  const welcome   = document.getElementById('dm-welcome');
+  if (!typedEl || !stream) return;
+
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  const MARK = '../Icon_1024_x_1024 bg removed.png';
+  const ALT_MARK = 'Icon_1024_x_1024 bg removed.png';
+
+  const SCENARIOS = {
+    schedules: {
+      question: "Show me this week's schedule across all crews",
+      steps: [
+        'Understanding intent: schedule overview',
+        'Querying scheduling engine for week of Apr 20',
+        'Grouping jobs by crew and cost centre',
+        'Formatting results'
+      ],
+      summary: "<b>18 jobs</b> scheduled this week across <b>4 crews</b>. Mon–Wed are the busiest days; one conflict flagged on Thursday.",
+      bullets: [
+        '4 crews dispatched across 9 sites',
+        'Total scheduled hours: 312h',
+        '1 scheduling conflict (Thu, crew 2 double-booked)'
+      ],
+      tableLabel: 'Schedule snapshot',
+      head: ['Day', 'Crew', 'Job', 'Hours'],
+      rows: [
+        ['Mon 20 Apr', '<span class="pill-emp">Crew A</span>', 'Riverside — fit-out', '32h'],
+        ['Tue 21 Apr', '<span class="pill-emp">Crew B</span>', 'Henderson — service', '24h'],
+        ['Wed 22 Apr', '<span class="pill-con">Crew C</span>', 'Smith Electrical', '28h'],
+        ['Thu 23 Apr', '<span class="pill-emp">Crew D</span>', 'Bayside — install', '30h']
+      ]
+    },
+    invoices: {
+      question: "List outstanding invoices older than 30 days",
+      steps: [
+        'Understanding intent: aged receivables',
+        'Scanning open invoices in accounting system',
+        'Filtering invoices > 30 days overdue',
+        'Ranking by amount owed'
+      ],
+      summary: "<b>7 invoices</b> past 30 days totalling <b>$48,920</b>. 2 are past 60 days and should be chased today.",
+      bullets: [
+        'Top exposure: Henderson Pty Ltd — $14,280 (47 days)',
+        '2 invoices > 60 days ($9,640 combined)',
+        'Average days-to-pay this quarter: 38'
+      ],
+      tableLabel: 'Aged receivables',
+      head: ['Invoice', 'Client', 'Age', 'Amount'],
+      rows: [
+        ['INV-00482', 'Henderson Pty Ltd', '47d', '$14,280'],
+        ['INV-00476', 'Bayside Constructions', '39d', '$ 9,120'],
+        ['INV-00471', 'Smith Electrical', '62d', '$ 6,840'],
+        ['INV-00468', 'Riverside Group', '66d', '$ 2,800']
+      ]
+    },
+    revenue: {
+      question: "Revenue this month and top clients",
+      steps: [
+        'Understanding intent: revenue summary',
+        'Aggregating invoices for April 2026',
+        'Grouping by client & comparing MoM',
+        'Preparing top-5 client breakdown'
+      ],
+      summary: "April revenue is tracking at <b>$312,480</b> — up <b>11.4%</b> on March. Top 5 clients account for 64% of revenue.",
+      bullets: [
+        'Month-to-date: $312,480 (vs $280,410 last month)',
+        'Top client: Bayside Constructions — $64,200',
+        'Services mix: 58% install / 30% service / 12% maintenance'
+      ],
+      tableLabel: 'Top clients — April',
+      head: ['Client', 'Jobs', 'Revenue', 'MoM'],
+      rows: [
+        ['Bayside Constructions', '6', '$64,200', '+14%'],
+        ['Henderson Pty Ltd', '4', '$48,900', '+8%'],
+        ['Riverside Group', '5', '$41,250', '+22%'],
+        ['Smith Electrical', '3', '$28,400', '-3%']
+      ]
+    }
+  };
+
+  const KEYS = ['schedules', 'invoices', 'revenue'];
+  const tabs = Array.from(document.querySelectorAll('.dm-tab'));
+  const suggestions = Array.from(document.querySelectorAll('.sug'));
+  const scroller = document.querySelector('.dm-scroll');
+  const overlay = document.getElementById('dm-overlay');
+  const overlayBtn = document.getElementById('dm-overlay-btn');
+  const demoWindow = document.querySelector('.demo-window');
+
+  let idx = 0;              // which scenario is currently playing
+  let runToken = 0;         // increments on every pause/jump/new run to cancel stale async chains
+  let playing = false;      // true while a scenario is running
+  let userIntent = 'play';  // explicit user wish: 'play' or 'pause' — only button/jump changes this
+  let hovered = false;      // true while cursor is inside the demo window
+  // Resume state: when paused mid-scenario, we remember how far we got so resume picks up there
+  let resumeState = null;   // { key, phase } where phase ∈ 'start'|'afterType'|'afterUserBubble'|'afterSteps'|'done'
+
+  // Cancellable sleep: resolves early if token no longer matches
+  function wait(ms, token) {
+    return new Promise(resolve => {
+      const start = Date.now();
+      const tick = () => {
+        if (token !== runToken) return resolve(false);
+        const elapsed = Date.now() - start;
+        if (elapsed >= ms) return resolve(true);
+        setTimeout(tick, Math.min(60, ms - elapsed));
+      };
+      tick();
+    });
+  }
+
+  function setActiveTab(key) {
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.key === key));
+  }
+
+  function focusSug(key) {
+    suggestions.forEach(s => s.classList.toggle('focus', s.dataset.key === key));
+  }
+
+  function resetStream() {
+    stream.innerHTML = '';
+    typedEl.textContent = '';
+    welcome.classList.remove('hide');
+  }
+
+  function updateOverlay() {
+    // Show button when hovered OR when user intent is paused. No scrim — don't mask content.
+    const showBtn = hovered || userIntent === 'pause';
+    overlay.classList.toggle('show', showBtn);
+    // Icon reflects USER INTENT, not engine state. So if user means "play",
+    // the button shows ⏸ (click to pause), even if engine is currently soft-paused by hover.
+    const showingPlayIcon = userIntent === 'pause';
+    overlayBtn.classList.toggle('is-paused', showingPlayIcon);
+    overlayBtn.setAttribute('aria-label', showingPlayIcon ? 'Play demo' : 'Pause demo');
+  }
+
+  async function typeInto(text, token) {
+    typedEl.textContent = '';
+    for (const ch of text) {
+      if (token !== runToken) return false;
+      typedEl.textContent += ch;
+      const ok = await wait(55 + Math.random() * 40, token);
+      if (!ok) return false;
+    }
+    return true;
+  }
+
+  function appendUserBubble(text) {
+    const b = document.createElement('div');
+    b.className = 'msg-user';
+    b.textContent = text;
+    stream.appendChild(b);
+  }
+
+  function appendAIShell() {
+    const wrap = document.createElement('div');
+    wrap.className = 'msg-ai';
+    wrap.innerHTML = `
+      <div class="ai-head">
+        <img class="mark" src="${MARK}" onerror="this.onerror=null;this.src='${ALT_MARK}'" alt="">
+        Biz AI Solutions
+      </div>
+      <div class="ai-steps"></div>
+    `;
+    stream.appendChild(wrap);
+    return wrap;
+  }
+
+  async function runSteps(container, steps, token) {
+    const stepsEl = container.querySelector('.ai-steps');
+    for (let i = 0; i < steps.length; i++) {
+      if (token !== runToken) return false;
+      const el = document.createElement('div');
+      el.className = 'dm-step active';
+      el.innerHTML = `<span class="bullet"></span><span>${steps[i]}</span>`;
+      stepsEl.appendChild(el);
+      if (scroller) scroller.scrollTop = scroller.scrollHeight;
+      if (!(await wait(1400, token))) return false;
+      el.classList.remove('active');
+      el.classList.add('done');
+      if (!(await wait(220, token))) return false;
+    }
+    return true;
+  }
+
+  function appendAnswer(container, scenario) {
+    const ans = document.createElement('div');
+    ans.className = 'ai-answer';
+    const rows = scenario.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('');
+    const head = scenario.head.map(h => `<th>${h}</th>`).join('');
+    ans.innerHTML = `
+      <p class="summary">${scenario.summary}</p>
+      <ul>${scenario.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
+      <div class="section-label">${scenario.tableLabel}</div>
+      <table class="result-table">
+        <thead><tr>${head}</tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+    container.appendChild(ans);
+  }
+
+  function setPhase(key, phase) { resumeState = { key, phase }; }
+
+  function renderStatic(key, upToPhase) {
+    // Instantly render the scenario up to `upToPhase`, then return the AI container
+    const s = SCENARIOS[key];
+    setActiveTab(key);
+    focusSug(key);
+    resetStream();
+    let ai = null;
+    if (upToPhase === 'start') return null;
+    typedEl.textContent = s.question;
+    if (upToPhase === 'afterType') return null;
+    welcome.classList.add('hide');
+    appendUserBubble(s.question);
+    typedEl.textContent = '';
+    if (upToPhase === 'afterUserBubble') return null;
+    ai = appendAIShell();
+    const stepsEl = ai.querySelector('.ai-steps');
+    s.steps.forEach(t => {
+      const el = document.createElement('div');
+      el.className = 'dm-step done';
+      el.innerHTML = `<span class="bullet"></span><span>${t}</span>`;
+      stepsEl.appendChild(el);
+    });
+    if (scroller) scroller.scrollTop = scroller.scrollHeight;
+    if (upToPhase === 'afterSteps') return ai;
+    appendAnswer(ai, s);
+    if (scroller) scroller.scrollTop = scroller.scrollHeight;
+    return ai;
+  }
+
+  async function playScenario(key, token, startFromPhase) {
+    const s = SCENARIOS[key];
+    if (!s) return false;
+    let ai = null;
+
+    // Render everything up to where we left off — instantly, no animation
+    if (startFromPhase && startFromPhase !== 'start') {
+      ai = renderStatic(key, startFromPhase);
+    } else {
+      setActiveTab(key);
+      focusSug(key);
+      resetStream();
+      setPhase(key, 'start');
+      if (!(await wait(700, token))) return false;
+    }
+
+    // Typing phase
+    if (!startFromPhase || startFromPhase === 'start') {
+      if (!(await typeInto(s.question, token))) return false;
+      setPhase(key, 'afterType');
+      if (!(await wait(500, token))) return false;
+    }
+
+    // User bubble phase
+    if (!startFromPhase || startFromPhase === 'start' || startFromPhase === 'afterType') {
+      welcome.classList.add('hide');
+      appendUserBubble(s.question);
+      typedEl.textContent = '';
+      setPhase(key, 'afterUserBubble');
+      if (!(await wait(600, token))) return false;
+    }
+
+    // Thinking steps phase
+    if (!startFromPhase || startFromPhase === 'start' || startFromPhase === 'afterType' || startFromPhase === 'afterUserBubble') {
+      ai = appendAIShell();
+      if (scroller) scroller.scrollTop = scroller.scrollHeight;
+      if (!(await wait(500, token))) return false;
+      if (!(await runSteps(ai, s.steps, token))) return false;
+      setPhase(key, 'afterSteps');
+      if (!(await wait(400, token))) return false;
+    }
+
+    // Answer phase
+    if (startFromPhase !== 'done') {
+      if (!ai) ai = document.querySelector('#dm-stream .msg-ai:last-child');
+      // Only append answer if it's not already there (resume from afterSteps adds a fresh one)
+      if (ai && !ai.querySelector('.ai-answer')) {
+        appendAnswer(ai, s);
+        if (scroller) scroller.scrollTop = scroller.scrollHeight;
+      }
+      setPhase(key, 'done');
+      if (!(await wait(7000, token))) return false;
+    }
+
+    // Scenario fully complete → clear resume state so next scenario starts fresh
+    resumeState = null;
+    return true;
+  }
+
+  async function runLoop() {
+    playing = true;
+    updateOverlay();
+    const token = ++runToken;
+    while (token === runToken) {
+      // If we have resume state for the current scenario, continue from that phase
+      let resumePhase = null;
+      if (resumeState && resumeState.key === KEYS[idx]) {
+        resumePhase = resumeState.phase;
+        if (resumePhase === 'done') {
+          // Already finished → advance to next
+          resumeState = null;
+          idx = (idx + 1) % KEYS.length;
+          if (!(await wait(800, token))) return;
+          continue;
+        }
+      }
+      const completed = await playScenario(KEYS[idx], token, resumePhase);
+      if (token !== runToken) return;
+      if (!completed) return;
+      idx = (idx + 1) % KEYS.length;
+      if (!(await wait(800, token))) return;
+    }
+  }
+
+  function pause() {
+    runToken++;  // cancels any in-flight playScenario — phase was already captured by setPhase
+    playing = false;
+    updateOverlay();
+  }
+
+  function play() {
+    if (playing) return;
+    runLoop();
+  }
+
+  function jumpTo(key) {
+    const newIdx = KEYS.indexOf(key);
+    if (newIdx === -1) return;
+    idx = newIdx;
+    // Jumping always means user wants to see it → set intent to play and restart fresh
+    userIntent = 'play';
+    resumeState = null;
+    runToken++;
+    playing = false;
+    runLoop();
+  }
+
+  // Overlay button: flips user intent (sticks through hover)
+  overlayBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (userIntent === 'play') {
+      // User wants to pause → stop now, stays paused even on mouseleave
+      userIntent = 'pause';
+      pause();
+    } else {
+      // User wants to play → start now, hover won't soft-pause while they still hover
+      userIntent = 'play';
+      if (!playing) play();
+      else updateOverlay();
+    }
+  });
+
+  // Hover on demo window: soft-pauses engine only while user intent is "play"
+  if (demoWindow) {
+    demoWindow.addEventListener('mouseenter', () => {
+      hovered = true;
+      if (userIntent === 'play' && playing) pause();
+      else updateOverlay();
+    });
+    demoWindow.addEventListener('mouseleave', () => {
+      hovered = false;
+      if (userIntent === 'play' && !playing) play();
+      else updateOverlay();
+    });
+  }
+
+  tabs.forEach(t => {
+    t.addEventListener('click', () => jumpTo(t.dataset.key));
+  });
+
+  suggestions.forEach(s => {
+    s.addEventListener('click', () => jumpTo(s.dataset.key));
+    s.style.cursor = 'pointer';
+  });
+
+  // Pause when tab hidden, resume when visible (respects user intent)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (playing) pause();
+    } else {
+      if (!playing && userIntent === 'play' && !hovered) play();
+    }
+  });
+
+  // Respect reduced motion: show first scenario static, no auto-play
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) {
+    const s = SCENARIOS.schedules;
+    setActiveTab('schedules');
+    welcome.classList.add('hide');
+    appendUserBubble(s.question);
+    const ai = appendAIShell();
+    const stepsEl = ai.querySelector('.ai-steps');
+    s.steps.forEach(t => {
+      const el = document.createElement('div');
+      el.className = 'dm-step done';
+      el.innerHTML = `<span class="bullet"></span><span>${t}</span>`;
+      stepsEl.appendChild(el);
+    });
+    appendAnswer(ai, s);
+    userIntent = 'pause';
+    updateOverlay();
+  } else {
+    runLoop();
+  }
+})();
 </script>
 </body>
 </html>
