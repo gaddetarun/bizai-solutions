@@ -6,6 +6,15 @@
 <title>AI Back-Office Automation for Construction | Biz AI Solutions</title>
 <meta name="description" content="Automate your field service and accounting platforms with plain English. Schedule, invoice, and raise POs in seconds — no integrations to build, no training required. Book a demo.">
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K1GS6G09DS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K1GS6G09DS');
+</script>
+
 <!-- Canonical -->
 <link rel="canonical" href="https://www.bizai-solutions.com/">
 
@@ -141,7 +150,7 @@
 </script>
 
 <!-- Preload LCP image — loads hero logo before anything else -->
-<link rel="preload" as="image" href="Icon 1024 x 1024.jpeg" fetchpriority="high">
+<link rel="preload" as="image" href="/Icon 1024 x 1024.jpeg" fetchpriority="high">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2100,8 +2109,8 @@ document.querySelectorAll('.faq-q').forEach(btn=>{
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  const MARK = '../Icon_1024_x_1024 bg removed.png';
-  const ALT_MARK = 'Icon_1024_x_1024 bg removed.png';
+  const MARK = '/Icon 1024 x 1024.jpeg';
+  const ALT_MARK = 'Icon 1024 x 1024.jpeg';
 
   const SCENARIOS = {
     schedules: {
@@ -2502,6 +2511,75 @@ document.querySelectorAll('.faq-q').forEach(btn=>{
   } else {
     runLoop();
   }
+})();
+</script>
+
+<!-- GA4 custom events -->
+<script>
+(function(){
+  if (typeof gtag !== 'function') return;
+
+  function track(name, params){ try{ gtag('event', name, params || {}); }catch(e){} }
+
+  // Book a Demo clicks (any link to the calendar)
+  document.querySelectorAll('a[href*="calendar.app.google"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      track('book_demo_click', {
+        location: a.closest('section') ? a.closest('section').id || 'unknown' : 'nav_or_footer',
+        link_text: (a.textContent || '').trim().slice(0, 60)
+      });
+    });
+  });
+
+  // mailto: clicks
+  document.querySelectorAll('a[href^="mailto:"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      track('email_click', { email: a.getAttribute('href').replace('mailto:', '') });
+    });
+  });
+
+  // Section-in-view (pricing, problem, solution, etc.)
+  var seen = {};
+  var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting && !seen[e.target.id]){
+        seen[e.target.id] = true;
+        track('section_view', { section: e.target.id });
+      }
+    });
+  }, { threshold: 0.4 }) : null;
+  if (io){
+    ['problem','solution','how','capabilities','integrations','pricing'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  }
+
+  // Scroll depth (25/50/75/100)
+  var marks = [25, 50, 75, 100], fired = {};
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var pct = Math.round((h.scrollTop + window.innerHeight) / h.scrollHeight * 100);
+    marks.forEach(function(m){
+      if (pct >= m && !fired[m]){ fired[m] = true; track('scroll_depth', { percent: m }); }
+    });
+  }, { passive: true });
+
+  // Demo play / pause (overlay button)
+  var demoBtn = document.querySelector('.dm-overlay-btn');
+  if (demoBtn){
+    demoBtn.addEventListener('click', function(){
+      // userIntent flips before this fires; we just record the click
+      track('demo_overlay_click', {});
+    });
+  }
+
+  // Scenario tab switches (Schedules / Invoices / Revenue)
+  document.querySelectorAll('.dm-tab').forEach(function(t){
+    t.addEventListener('click', function(){
+      track('demo_tab_switch', { scenario: t.getAttribute('data-key') || 'unknown' });
+    });
+  });
 })();
 </script>
 </body>
